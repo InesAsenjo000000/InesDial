@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección Automática de Opciones</title>
+    <style>
+        .options {
+            margin-top: 20px;
+        }
+        .options button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #selectedOption {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #tecleando {
+            font-size: 20px;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bienvenido al sistema de atención de la aseguradora</h2>
+    <p>El agente seleccionará la opción correspondiente:</p>
+    
+    <!-- Opciones del menú -->
+    <div class="options" id="menuOptions"></div>
+
+    <!-- Mostrar la opción seleccionada -->
+    <div id="selectedOption"></div>
+
+    <!-- Mostrar el "tecleado" -->
+    <div id="tecleando"></div>
+
+    <script>
+        // JSON con las opciones
+        const opcionesJSON = {
+            "opciones": [
+                { "id": 1, "descripcion": "Siniestro ya abierto", "numero": 1 },
+                { "id": 2, "descripcion": "Otros tipos de consulta", "numero": 2 },
+                { "id": 3, "descripcion": "Información sobre póliza", "numero": 3 }
+            ]
+        };
+
+        // Función para generar los botones de las opciones
+        function mostrarOpciones() {
+            const menuOptionsDiv = document.getElementById('menuOptions');
+            opcionesJSON.opciones.forEach(opcion => {
+                const button = document.createElement('button');
+                button.textContent = `${opcion.id} - ${opcion.descripcion}`;
+                button.onclick = function() {
+                    seleccionarOpcion(opcion.id);
+                };
+                menuOptionsDiv.appendChild(button);
+            });
+        }
+
+        // Función para manejar la selección de una opción
+        function seleccionarOpcion(opcionId) {
+            const opcionSeleccionada = opcionesJSON.opciones.find(opcion => opcion.id === opcionId);
+            const mensajeDiv = document.getElementById('selectedOption');
+            const tecleandoDiv = document.getElementById('tecleando');
+            
+            mensajeDiv.textContent = `Has seleccionado la opción: ${opcionSeleccionada.descripcion}`;
+            
+            // Simulación de "teclear" el número
+            teclearNumero(opcionSeleccionada.numero);
+        }
+
+        // Función para simular el tecleo automático del número
+        function teclearNumero(numero) {
+            const tecleandoDiv = document.getElementById('tecleando');
+            tecleandoDiv.textContent = `El agente está tecleando el número: ${numero}`;
+        }
+
+        // Llamar a la función para mostrar las opciones al cargar la página
+        mostrarOpciones();
+    </script>
+</body>
+</html>
